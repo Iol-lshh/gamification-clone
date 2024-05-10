@@ -1,8 +1,10 @@
 package lshh.gamification.controller.dto;
 
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 
+@Getter
 public class ResultModel <T>{
     HttpStatusCode code;
     String message;

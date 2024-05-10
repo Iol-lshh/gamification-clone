@@ -23,7 +23,7 @@ public record UserJoinCommand(
     }
 
     public User toUserEntityWithCommonUser(CommonUser commonUser) {
-        return User.builder()
+        User user = User.builder()
                 .userId(userId)
                 .schoolClass(SchoolClass.valueOf(schoolClass))
                 .nickName(commonUser.getName())
@@ -31,26 +31,6 @@ public record UserJoinCommand(
                 .defaultRoom(defaultRoom)
                 .grade(commonUser.getGrade())
                 .build();
-    }
-    public UserEtcInfo toEtcInfoEntity(Long userIdx) {
-        return UserEtcInfo.builder()
-                .userIdx(userIdx)
-                .build();
-    }
-    public UserEquiped toEquipedEntity(Long userIdx) {
-        return UserEquiped.builder()
-                .userIdx(userIdx)
-                .build();
-    }
-    public UserLevel toLevelEntity(Long userIdx) {
-        return UserLevel.builder()
-                .userIdx(userIdx)
-                .build();
-    }
-    public UserInventoryItem toDefaultInventoryItemEntity(Long userIdx) {
-        return UserInventoryItem.builder()
-                .user(User.of(userIdx))
-                .itemId(defaultRoom)
-                .build();
+        return user;
     }
 }

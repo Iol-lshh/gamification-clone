@@ -4,6 +4,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lshh.gamification.common.user.CommonUser;
 import lshh.gamification.common.user.NoSuchCommonUserException;
+import lshh.gamification.domain.user.code.SchoolClass;
+import lshh.gamification.domain.user.dto.UserCoreVo;
 import lshh.gamification.domain.user.dto.UserJoinCommand;
 import lshh.gamification.domain.user.dto.UserJoinResult;
 import lshh.gamification.domain.user.component.*;
@@ -11,6 +13,9 @@ import lshh.gamification.domain.user.entity.User;
 import lshh.gamification.domain.user.exception.UserJoinException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -36,18 +41,21 @@ public class UserService {
                 .orElseThrow(NoSuchCommonUserException::new);
 
         User user = command.toUserEntityWithCommonUser(commonUser);
-        Long userIdx = userRepository.save(user).getIdx();
-
-        etcInfoRepository.save(command.toEtcInfoEntity(userIdx));
-        equipedRepository.save(command.toEquipedEntity(userIdx));
-        levelRepository.save(command.toLevelEntity(userIdx));
-        inventoryItemRepository.save(command.toDefaultInventoryItemEntity(userIdx));
+        user = userRepository.save(user);
+        user.initAggregates();
+        etcInfoRepository.save(user.getEtcInfo());
+        equipedRepository.save(user.getEquiped());
+        levelRepository.save(user.getLevel());
+        inventoryItemRepository.saveAll(user.getInventoryItems());
         noticeMessenger.sendJoinNotice(user);
 
-        return new UserJoinResult("Y", ""+userIdx);
+        return new UserJoinResult("Y", ""+user.getIdx());
     }
 
-
-
-
+    @Operation(summary = "사용자 목록 전체 조회")
+    @Transactional(readOnly = true)
+    public List<UserCoreVo> findAllCore() {
+        List<User> users = userRepository.findAll();
+        return UserCoreVo.from(users);
+    }
 }

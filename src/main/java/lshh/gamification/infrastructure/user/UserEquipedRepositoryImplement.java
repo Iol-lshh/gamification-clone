@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class UserEquipedRepositoryImplement implements UserEquipedRepository {
     @Override
-    public void save(UserEquiped of) {
+    public void save(UserEquiped entity) {
 
     }
 }

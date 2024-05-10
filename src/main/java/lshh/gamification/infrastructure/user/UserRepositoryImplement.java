@@ -5,6 +5,7 @@ import lshh.gamification.domain.user.entity.User;
 import lshh.gamification.domain.user.component.UserRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -20,5 +21,10 @@ public class UserRepositoryImplement implements UserRepository {
     @Override
     public Optional<User> findByUserId(String userId) {
         return jpaRepository.findByUserId(userId);
+    }
+
+    @Override
+    public List<User> findAll() {
+        return jpaRepository.findAll();
     }
 }

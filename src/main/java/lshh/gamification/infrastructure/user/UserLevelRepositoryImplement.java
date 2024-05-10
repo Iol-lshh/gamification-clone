@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class UserLevelRepositoryImplement implements UserLevelRepository {
     @Override
-    public void save(UserLevel of) {
+    public void save(UserLevel entity) {
 
     }
 }

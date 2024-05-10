@@ -9,6 +9,7 @@ import lshh.gamification.domain.user.code.MemberType;
 import lshh.gamification.domain.user.code.SchoolClass;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -49,5 +50,39 @@ public class User {
         User user = new User();
         user.idx = userIdx;
         return user;
+    }
+
+    public void initAggregates() {
+        initEtcInfo();
+        initEquiped();
+        initLevel();
+        initInventoryItem();
+    }
+
+    public void initEtcInfo() {
+        this.etcInfo = UserEtcInfo.builder()
+                .user(this)
+                .build();
+    }
+
+    public void initEquiped() {
+        this.equiped = UserEquiped.builder()
+                .user(this)
+                .build();
+    }
+
+    public void initLevel() {
+        this.level = UserLevel.builder()
+                .user(this)
+                .build();
+    }
+
+    public void initInventoryItem() {
+        UserInventoryItem inventoryItem = UserInventoryItem.builder()
+                .user(this)
+                .itemId(defaultRoom)
+                .build();
+        this.inventoryItems = new ArrayList<>();
+        this.inventoryItems.add(inventoryItem);
     }
 }
