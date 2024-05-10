@@ -1,4 +1,6 @@
 package lshh.gamification.domain.user.dto;
 
-public class UserGiftCreation {
+public record UserGiftCreation(
+
+) {
 }

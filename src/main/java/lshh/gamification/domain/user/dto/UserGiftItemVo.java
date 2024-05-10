@@ -1,4 +1,6 @@
 package lshh.gamification.domain.user.dto;
 
-public class UserGiftItemVo {
+public record UserGiftItemVo(
+
+) {
 }
