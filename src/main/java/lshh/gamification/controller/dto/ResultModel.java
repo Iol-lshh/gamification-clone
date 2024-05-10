@@ -1,4 +1,4 @@
-package lshh.gamification.controller;
+package lshh.gamification.controller.dto;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;

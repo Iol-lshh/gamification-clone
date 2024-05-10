@@ -1,7 +1,6 @@
-package lshh.gamification.domain.user;
+package lshh.gamification.domain.user.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
@@ -22,4 +21,8 @@ public class UserLevel {
     private LocalDateTime lastLevelUpDate;
     private LocalDateTime lastExpDate;
     private Integer beforeLevel;
+
+    @OneToOne
+    @MapsId
+    private User user;
 }

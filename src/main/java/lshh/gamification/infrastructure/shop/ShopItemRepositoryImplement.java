@@ -7,5 +7,4 @@ import org.springframework.stereotype.Repository;
 @RequiredArgsConstructor
 @Repository
 public class ShopItemRepositoryImplement implements ShopItemRepository {
-    private final ShopItemJpaRepository jpaRepository;
 }

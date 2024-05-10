@@ -1,10 +1,6 @@
-package lshh.gamification.domain.user;
+package lshh.gamification.domain.user.entity;
 
-import jakarta.annotation.Nullable;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,30 +12,28 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 @Entity
+@Table(name = "tb_user")
 public class User {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
     private String userId;
     private SchoolClass schoolClass;
     private String nickName;
     private MemberType memberType;
     private Integer ruby;
-    @Nullable
     private String defaultAvatar;
-    @Nullable
     private String defaultRoom;
     boolean createAvatarYn;
     boolean createRoomYn;
     boolean noticeYn;
     private LocalDateTime regDate;
     boolean servicePauseYn;
-    @Nullable
     private Integer AvatarNickCode;
-    @Nullable
     private Integer grade;
 
     @OneToOne(mappedBy = "user")
@@ -50,4 +44,10 @@ public class User {
     private UserLevel level;
     @OneToMany(mappedBy = "user")
     private List<UserInventoryItem> inventoryItems;
+
+    public static User of(Long userIdx) {
+        User user = new User();
+        user.idx = userIdx;
+        return user;
+    }
 }

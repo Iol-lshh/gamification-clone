@@ -1,11 +1,14 @@
 package lshh.gamification.domain.user;
 
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lshh.gamification.common.user.CommonUser;
 import lshh.gamification.common.user.NoSuchCommonUserException;
 import lshh.gamification.domain.user.dto.UserJoinCommand;
 import lshh.gamification.domain.user.dto.UserJoinResult;
 import lshh.gamification.domain.user.component.*;
+import lshh.gamification.domain.user.entity.User;
+import lshh.gamification.domain.user.exception.UserJoinException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,8 +24,14 @@ public class UserService {
     private final UserInventoryItemRepository inventoryItemRepository;
     private final UserNoticeMessenger noticeMessenger;
 
+    @Operation(summary = "사용자 가입")
     @Transactional
     public UserJoinResult join(UserJoinCommand command) {
+        userRepository.findByUserId(command.userId())
+                .ifPresent(user -> {
+                    throw new UserJoinException("이미 가입되어 있습니다.");
+                });
+
         CommonUser commonUser = commonUserRepository.findCommonUserByUserId(command.userId())
                 .orElseThrow(NoSuchCommonUserException::new);
 
@@ -35,8 +44,10 @@ public class UserService {
         inventoryItemRepository.save(command.toDefaultInventoryItemEntity(userIdx));
         noticeMessenger.sendJoinNotice(user);
 
-        return UserJoinResult.of("Y", ""+user.getIdx());
+        return new UserJoinResult("Y", ""+userIdx);
     }
+
+
 
 
 }

@@ -1,9 +1,9 @@
 package lshh.gamification.domain.user.dto;
 
 import lshh.gamification.common.user.CommonUser;
-import lshh.gamification.domain.user.*;
 import lshh.gamification.domain.user.code.SchoolClass;
-import lshh.gamification.domain.user.exception.UserCreationException;
+import lshh.gamification.domain.user.entity.*;
+import lshh.gamification.domain.user.exception.UserJoinException;
 
 public record UserJoinCommand(
         String userId,
@@ -14,11 +14,11 @@ public record UserJoinCommand(
 ) {
     public UserJoinCommand {
         if (userId == null || userId.isEmpty()) {
-            throw new UserCreationException("userId is null or empty");
+            throw new UserJoinException("userId is null or empty");
         } else if (defaultAvatar == null || defaultAvatar.isEmpty()) {
-            throw new UserCreationException("defaultAvatar is null or empty");
+            throw new UserJoinException("defaultAvatar is null or empty");
         } else if (defaultRoom == null || defaultRoom.isEmpty()) {
-            throw new UserCreationException("defaultRoom is null or empty");
+            throw new UserJoinException("defaultRoom is null or empty");
         }
     }
 
@@ -49,7 +49,7 @@ public record UserJoinCommand(
     }
     public UserInventoryItem toDefaultInventoryItemEntity(Long userIdx) {
         return UserInventoryItem.builder()
-                .userIdx(userIdx)
+                .user(User.of(userIdx))
                 .itemId(defaultRoom)
                 .build();
     }

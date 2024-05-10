@@ -1,7 +1,6 @@
-package lshh.gamification.domain.user;
+package lshh.gamification.domain.user.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
@@ -9,8 +8,8 @@ import lshh.gamification.domain.user.code.ProfileType;
 
 import java.time.LocalDateTime;
 
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 @Entity
 public class UserEtcInfo {
@@ -27,4 +26,7 @@ public class UserEtcInfo {
     private Integer friendCount;
     private String nickNameFullString;
 
+    @OneToOne
+    @MapsId
+    private User user;
 }

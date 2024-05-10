@@ -1,8 +1,6 @@
-package lshh.gamification.domain.user;
+package lshh.gamification.domain.user.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
@@ -19,16 +17,19 @@ public class UserInventoryItem {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long idx;
-    private Long userIdx;
     private String itemId;
     private boolean equipYn;
     private LocalDateTime useStartDate;
     private LocalDateTime useEndDate;
     private Long shopItemIdx;
 
+    @ManyToOne
+    @JoinColumn(name = "user_idx", insertable = false, updatable = false)
+    private User user;
+
     public static UserInventoryItem of(Long userIdx, String itemId, boolean equipYn) {
         UserInventoryItem userInventoryItem = new UserInventoryItem();
-        userInventoryItem.userIdx = userIdx;
+        userInventoryItem.user = User.of(userIdx);
         userInventoryItem.itemId = itemId;
         userInventoryItem.equipYn = equipYn;
         return userInventoryItem;

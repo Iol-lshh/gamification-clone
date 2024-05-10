@@ -1,6 +1,6 @@
 package lshh.gamification.domain.user.component;
 
-import lshh.gamification.domain.user.UserEquiped;
+import lshh.gamification.domain.user.entity.UserEquiped;
 
 public interface UserEquipedRepository {
 
