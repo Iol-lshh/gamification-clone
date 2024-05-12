@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.concurrent.locks.Lock;
 
 @RequiredArgsConstructor
 @Service
@@ -26,23 +27,30 @@ public class UserService {
     private final UserLevelRepository levelRepository;
     private final UserInventoryItemRepository inventoryItemRepository;
     private final UserNoticeMessenger noticeMessenger;
+    private final UserLockBuffer userLockBuffer;
 
     @Operation(summary = "사용자 가입")
     @Transactional
     public UserJoinResult join(UserJoinCommand command) {
-        userRepository.findByUserId(command.userId())
-                .ifPresent(user -> {
-                    throw new UserJoinException("이미 가입되어 있습니다.");
-                });
+        Lock lock = userLockBuffer.getLock("join:"+command.userId());
+        lock.lock();
+        try{
+            userRepository.findByUserId(command.userId())
+                    .ifPresent(user -> {
+                        throw new UserJoinException("이미 가입되어 있습니다.");
+                    });
 
-        CommonUser commonUser = commonUserRepository.findCommonUserByUserId(command.userId())
-                .orElseThrow(NoSuchCommonUserException::new);
+            CommonUser commonUser = commonUserRepository.findCommonUserByUserId(command.userId())
+                    .orElseThrow(NoSuchCommonUserException::new);
 
-        User user = command.toUserEntityWithCommonUser(commonUser);
-        user = userRepository.save(user);
-        noticeMessenger.sendJoinNotice(user);
+            User user = command.toUserEntityWithCommonUser(commonUser);
+            user = userRepository.save(user);
+            noticeMessenger.sendJoinNotice(user);
 
-        return new UserJoinResult("Y", ""+user.getIdx());
+            return new UserJoinResult("Y", ""+user.getIdx());
+        }finally{
+            lock.unlock();
+        }
     }
 
     @Operation(summary = "사용자 목록 전체 조회")
