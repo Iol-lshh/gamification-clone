@@ -1,4 +1,4 @@
-package lshh.gamification.common.user;
+package lshh.gamification.common.library.user;
 
 import java.util.Optional;
 

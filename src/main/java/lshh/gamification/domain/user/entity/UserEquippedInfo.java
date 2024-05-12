@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @Entity
-public class UserEquiped {
+public class UserEquippedInfo {
     @Id
     private Long userIdx;
 

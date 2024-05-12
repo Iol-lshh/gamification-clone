@@ -24,7 +24,7 @@ public class UserInventoryItem {
     private Long shopItemIdx;
 
     @ManyToOne
-    @JoinColumn(name = "user_idx", insertable = false, updatable = false)
+    @JoinColumn(name = "user_idx")
     private User user;
 
     public static UserInventoryItem of(Long userIdx, String itemId, boolean equipYn) {

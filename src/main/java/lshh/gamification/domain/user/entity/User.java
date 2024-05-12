@@ -37,13 +37,13 @@ public class User {
     private Integer AvatarNickCode;
     private Integer grade;
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private UserEtcInfo etcInfo;
-    @OneToOne(mappedBy = "user")
-    private UserEquiped equiped;
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private UserEquippedInfo equippedInfo;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private UserLevel level;
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<UserInventoryItem> inventoryItems;
 
     public static User of(Long userIdx) {
@@ -66,7 +66,7 @@ public class User {
     }
 
     public void initEquiped() {
-        this.equiped = UserEquiped.builder()
+        this.equippedInfo = UserEquippedInfo.builder()
                 .user(this)
                 .build();
     }

@@ -1,8 +1,8 @@
 package lshh.gamification.infrastructure.user;
 
 import lombok.RequiredArgsConstructor;
-import lshh.gamification.common.user.CommonUser;
-import lshh.gamification.common.user.CommonUserClient;
+import lshh.gamification.common.library.user.CommonUser;
+import lshh.gamification.common.library.user.CommonUserClient;
 import lshh.gamification.domain.user.component.CommonUserRepository;
 import org.springframework.stereotype.Repository;
 

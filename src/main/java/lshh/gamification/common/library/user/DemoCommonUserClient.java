@@ -1,4 +1,4 @@
-package lshh.gamification.common.user;
+package lshh.gamification.common.library.user;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.RandomUtils;

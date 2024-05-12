@@ -1,6 +1,6 @@
 package lshh.gamification.domain.user.dto;
 
-import lshh.gamification.common.user.CommonUser;
+import lshh.gamification.common.library.user.CommonUser;
 import lshh.gamification.domain.user.code.SchoolClass;
 import lshh.gamification.domain.user.entity.*;
 import lshh.gamification.domain.user.exception.UserJoinException;
@@ -31,6 +31,7 @@ public record UserJoinCommand(
                 .defaultRoom(defaultRoom)
                 .grade(commonUser.getGrade())
                 .build();
+        user.initAggregates();
         return user;
     }
 }

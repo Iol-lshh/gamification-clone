@@ -1,7 +1,7 @@
 package lshh.gamification.domain.user;
 
-import lshh.gamification.common.user.CommonUser;
-import lshh.gamification.common.user.NoSuchCommonUserException;
+import lshh.gamification.common.library.user.CommonUser;
+import lshh.gamification.common.library.user.NoSuchCommonUserException;
 import lshh.gamification.domain.user.code.SchoolClass;
 import lshh.gamification.domain.user.component.*;
 import lshh.gamification.domain.user.dto.UserJoinCommand;
@@ -36,7 +36,7 @@ public class UserServiceTest {
     private UserEtcInfoRepository etcInfoRepository;
 
     @Mock
-    private UserEquipedRepository equipedRepository;
+    private UserEquippedInfoRepository equipedRepository;
 
     @Mock
     private UserLevelRepository levelRepository;

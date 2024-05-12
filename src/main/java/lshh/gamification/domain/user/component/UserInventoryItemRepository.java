@@ -5,6 +5,10 @@ import lshh.gamification.domain.user.entity.UserInventoryItem;
 import java.util.List;
 
 public interface UserInventoryItemRepository {
+
     void save(UserInventoryItem entity);
     void saveAll(List<UserInventoryItem> entities);
+
+    List<UserInventoryItem> findByUserIdx(Long userIdx);
+    List<UserInventoryItem> findAll();
 }

@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lshh.gamification.controller.dto.ResultModel;
 import lshh.gamification.domain.user.UserService;
-import lshh.gamification.domain.user.dto.UserCoreVo;
+import lshh.gamification.domain.user.dto.UserView;
 import lshh.gamification.domain.user.dto.UserJoinCommand;
 import lshh.gamification.domain.user.dto.UserJoinResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,8 +33,8 @@ public class UserController {
     @Tag(name = "User")
     @Operation(summary = "전체 사용자 목록 조회")
     @GetMapping("/list/all")
-    public ResultModel<List<UserCoreVo>> listAll(){
-        List<UserCoreVo> list = userService.findAllCore();
+    public ResultModel<List<UserView>> listAll(){
+        List<UserView> list = userService.findAllCore();
         return ResultModel.success(list);
     }
 
