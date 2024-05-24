@@ -34,7 +34,7 @@ public class UserController {
     @Operation(summary = "전체 사용자 목록 조회")
     @GetMapping("/list/all")
     public ResultModel<List<UserView>> listAll(){
-        List<UserView> list = userService.findAllCore();
+        List<UserView> list = userService.findAll();
         return ResultModel.success(list);
     }
 

@@ -49,7 +49,7 @@ public class UserService {
 
     @Operation(summary = "사용자 목록 전체 조회")
     @Transactional(readOnly = true)
-    public List<UserView> findAllCore() {
+    public List<UserView> findAll() {
         List<User> users = userRepository.findAll();
         return UserView.from(users);
     }
