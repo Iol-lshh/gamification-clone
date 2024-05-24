@@ -16,7 +16,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
-import java.util.concurrent.locks.Lock;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -48,9 +47,6 @@ public class UserServiceTest {
     @Mock
     private UserNoticeMessenger noticeMessenger;
 
-    @Mock
-    private UserLockBuffer userLockBuffer;
-
     @InjectMocks
     private UserService userService;
 
@@ -60,7 +56,6 @@ public class UserServiceTest {
         // given
         UserJoinCommand command = new UserJoinCommand("userId", "ELEMENTARY", "nick", "avatar", "room");
         CommonUser stubCommonUser = new CommonUser("userId", "name", "email", 1);
-        given(userLockBuffer.getLock(any())).willReturn(mock(Lock.class));
         given(commonUserRepository.findCommonUserByUserId(any())).willReturn(Optional.of(stubCommonUser));
         User stubUser = User.builder()
                         .idx(1L)
@@ -85,7 +80,6 @@ public class UserServiceTest {
     void join_whenUserAlreadyExists_throwUserJoinException() {
         // given
         UserJoinCommand command = new UserJoinCommand("userId", "ELEMENTARY", "nick", "avatar", "room");
-        given(userLockBuffer.getLock(any())).willReturn(mock(Lock.class));
         given(userRepository.findByUserId(any())).willReturn(Optional.of(mock(User.class)));
 
         // when
@@ -96,7 +90,6 @@ public class UserServiceTest {
     @DisplayName("회원가입: 공통 user 없음")
     void join_whenCommonUserNotExists_throwNoSuchCommonUserException() {
         // given
-        given(userLockBuffer.getLock(any())).willReturn(mock(Lock.class));
         UserJoinCommand command = new UserJoinCommand("userId", "ELEMENTARY", "nick", "avatar", "room");
         given(commonUserRepository.findCommonUserByUserId(any())).willReturn(Optional.empty());
 

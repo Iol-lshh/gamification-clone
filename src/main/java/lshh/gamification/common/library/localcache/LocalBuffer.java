@@ -1,10 +1,10 @@
-package lshh.gamification.common.library.democache;
+package lshh.gamification.common.library.localcache;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 // redis 대용
-public abstract class SimpleBuffer<T> {
+public abstract class LocalBuffer<T> {
     protected Map<String, T> cacheMap = new ConcurrentHashMap<>();
 
     public Result set(String key, T value) {

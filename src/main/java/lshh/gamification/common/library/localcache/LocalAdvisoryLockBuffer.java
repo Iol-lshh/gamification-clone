@@ -1,9 +1,11 @@
-package lshh.gamification.common.library.democache;
+package lshh.gamification.common.library.localcache;
+
+import lshh.gamification.common.library.lock.AdvisoryLockBuffer;
 
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
-public abstract class AdvisoryLockBuffer extends SimpleBuffer<Lock>{
+public abstract class LocalAdvisoryLockBuffer extends LocalBuffer<Lock> implements AdvisoryLockBuffer {
 
     public Lock getLock(String key) {
         cacheMap.putIfAbsent(key, new ReentrantLock());

@@ -1,7 +1,7 @@
 package lshh.gamification.infrastructure.user;
 
 import lombok.RequiredArgsConstructor;
-import lshh.gamification.common.library.democache.AdvisoryLockBuffer;
+import lshh.gamification.common.library.lock.AdvisoryLockBuffer;
 import lshh.gamification.domain.user.component.UserLockBuffer;
 import org.springframework.stereotype.Repository;
 
