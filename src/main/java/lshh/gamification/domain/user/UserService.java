@@ -5,7 +5,8 @@ import lombok.RequiredArgsConstructor;
 import lshh.gamification.common.library.lock.AdvisoryLock;
 import lshh.gamification.common.library.user.CommonUser;
 import lshh.gamification.common.library.user.NoSuchCommonUserException;
-import lshh.gamification.domain.user.dto.UserView;
+import lshh.gamification.domain.user.dto.UserModel;
+import lshh.gamification.domain.user.dto.SimpleUserVo;
 import lshh.gamification.domain.user.dto.UserJoinCommand;
 import lshh.gamification.domain.user.dto.UserJoinResult;
 import lshh.gamification.domain.user.component.*;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -49,8 +51,15 @@ public class UserService {
 
     @Operation(summary = "사용자 목록 전체 조회")
     @Transactional(readOnly = true)
-    public List<UserView> findAll() {
+    public List<SimpleUserVo> findAll() {
         List<User> users = userRepository.findAll();
-        return UserView.from(users);
+        return SimpleUserVo.from(users);
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<UserModel> findUserModelByUserId(String userId) {
+        User user = userRepository.findByUserId(userId)
+                .orElseThrow(() -> new IllegalArgumentException("사용자 정보가 없습니다."));
+        return Optional.of(UserModel.from(user));
     }
 }

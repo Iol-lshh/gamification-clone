@@ -6,7 +6,7 @@ import lshh.gamification.domain.user.entity.User;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public record UserView(
+public record SimpleUserVo(
         Long idx,
         String userId,
         SchoolClass schoolClass,
@@ -15,9 +15,9 @@ public record UserView(
         String nickNameFullString,
         Integer grade
 ){
-    public static List<UserView> from(List<User> users) {
+    public static List<SimpleUserVo> from(List<User> users) {
         return users.stream()
-                .map(user -> new UserView(
+                .map(user -> new SimpleUserVo(
                         user.getIdx(),
                         user.getUserId(),
                         user.getSchoolClass(),

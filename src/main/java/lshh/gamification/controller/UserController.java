@@ -5,7 +5,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lshh.gamification.controller.dto.ResultModel;
 import lshh.gamification.domain.user.UserService;
-import lshh.gamification.domain.user.dto.UserView;
+import lshh.gamification.domain.user.dto.UserModel;
+import lshh.gamification.domain.user.dto.SimpleUserVo;
 import lshh.gamification.domain.user.dto.UserJoinCommand;
 import lshh.gamification.domain.user.dto.UserJoinResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +23,6 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
 
-    @Tag(name = "User")
     @Operation(summary = "회원가입")
     @PostMapping("/join")
     public ResultModel<UserJoinResult> join(UserJoinCommand userJoinCommand){
@@ -30,12 +30,18 @@ public class UserController {
         return ResultModel.success(view);
     }
 
-    @Tag(name = "User")
     @Operation(summary = "전체 사용자 목록 조회")
     @GetMapping("/list/all")
-    public ResultModel<List<UserView>> listAll(){
-        List<UserView> list = userService.findAll();
+    public ResultModel<List<SimpleUserVo>> listAll(){
+        List<SimpleUserVo> list = userService.findAll();
         return ResultModel.success(list);
+    }
+
+    @GetMapping("/info/{userId}")
+    public ResultModel<UserModel> info(String userId){
+        UserModel model = userService.findUserModelByUserId(userId)
+                .orElseThrow(() -> new IllegalArgumentException("사용자 정보가 없습니다."));
+        return ResultModel.success(model);
     }
 
 }
